@@ -4,5 +4,5 @@
 
 provider "hcloud" {
   token = "${file("{{ $specName }}")}"
-  alias = "nodepool_{{ $resourceSuffix }}"
+  alias = "nodepool_test"
 }
