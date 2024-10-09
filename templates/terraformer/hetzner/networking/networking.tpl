@@ -12,7 +12,7 @@
 {{- $firewallName  := printf "fwl%s%s" $clusterHash $uniqueFingerPrint }}
 
 resource "hcloud_firewall" "{{ $firewallResourceName }}" {
-  provider = hcloud.nodepool_{{ $resourceSuffix }}
+  provider = hcloud.nodepool_test
   name     = "{{ $firewallName }}"
   rule {
     direction  = "in"
