@@ -14,7 +14,7 @@
 {{- $sshKeyName         := printf "key-%s-%s-%s" $nodepool.Name $clusterHash $specName }}
 
     resource "hcloud_ssh_key" "{{ $sshKeyResourceName }}" {
-      provider   = hcloud.nodepool_{{ $resourceSuffix }}
+      provider   = hcloud.nodepool_test
       name       = "{{ $sshKeyName }}"
       public_key = file("./{{ $nodepool.Name }}")
 
@@ -32,7 +32,7 @@
         {{- $volumeResourceName           := printf "%s_%s_volume" $node.Name $resourceSuffix }}
 
         resource "hcloud_server" "{{ $serverResourceName }}" {
-          provider      = hcloud.nodepool_{{ $resourceSuffix }}
+          provider      = hcloud.nodepool_test
           name          = "{{ $node.Name }}"
           server_type   = "{{ $nodepool.Details.ServerType }}"
           image         = "{{ $nodepool.Details.Image }}"
@@ -84,7 +84,7 @@ EOF
             {{- $volumeAttachmentResourceName := printf "%s_att" $volumeResourceName }}
 
             resource "hcloud_volume" "{{ $volumeResourceName }}" {
-              provider  = hcloud.nodepool_{{ $resourceSuffix }}
+              provider  = hcloud.nodepool_test
               name      = "{{ $volumeName }}"
               size      = {{ $nodepool.Details.StorageDiskSize }}
               format    = "xfs"
@@ -92,7 +92,7 @@ EOF
             }
 
             resource "hcloud_volume_attachment" "{{ $volumeResourceName }}_att" {
-              provider  = hcloud.nodepool_{{ $resourceSuffix }}
+              provider  = hcloud.nodepool_test
               volume_id = hcloud_volume.{{ $volumeResourceName }}.id
               server_id = hcloud_server.{{ $serverResourceName }}.id
               automount = false
